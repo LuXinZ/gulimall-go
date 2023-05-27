@@ -10,12 +10,15 @@ func InitRouters(g *gin.Engine) error {
 
 	// 创建 v1 路由分组
 	v1 := g.Group("/v1")
-	c := category.New()
+	categoryController := category.New()
 	{
 		// 创建 users 路由分组
-		userv1 := v1.Group("/list")
+		product := v1.Group("/product")
 		{
-			userv1.GET("", c.List)
+			categoryRouter := product.Group("/category")
+			{
+				categoryRouter.GET("/list/tree", categoryController.List)
+			}
 		}
 	}
 
